@@ -17,7 +17,8 @@ rails server
 2. Users can view and bid for a product multiple times before the deadline.
 3. Once the deadline for a product is met the user with the highest bid should be given an option to “Claim” the item.
 4. Dashboard for users to view all their claimed items.
-5. Dashboard for users to view all items which they upload for auction.(Items claimed by other users can be marks as “Claimed by Mr. XYZ” on this page).
+5. Dashboard for users to view all items which they upload for auction.
+6. Items claimed by other users are marked as “Claimed by Mr. XYZ” on this page.
 
 # List of non-implemented/planned features
 - all features implemented
