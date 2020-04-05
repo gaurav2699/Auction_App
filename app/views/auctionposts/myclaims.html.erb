@@ -1,0 +1,26 @@
+<div class="auctionpost-index-grid pt4">
+  <% @auctionposts.each do |auctionpost| %>
+    <% if auctionpost.claimedbyid==current_user.id %>
+    <div class="auctionpost border-light">
+      <div class="auctionpost-thumb">
+      <%if auctionpost.image.attached?%>  <%= link_to image_tag(auctionpost.image), auctionpost %><% end %>
+
+
+      </div>
+
+
+    <div class="pa3">
+
+      <h3 class="fw7 f4 title"><%= link_to auctionpost.name, auctionpost %></h3>
+      <p class="has-text-gray fg pt1">Deadline: <%= auctionpost.deadlinetime if auctionpost.user%></p>
+      <br>
+
+
+      <p class="f3 fw6 has-text-right pt2 price"> Winning bid: Rs <%= auctionpost.startingbid %></p>
+
+
+
+    </div>
+  </div>
+    <% end %>
+  <% end %>

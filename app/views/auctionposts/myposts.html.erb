@@ -1,0 +1,35 @@
+<div class="auctionpost-index-grid pt4">
+  <% @auctionposts.each do |auctionpost| %>
+    <% if auctionpost.user_id==current_user.id %>
+    <div class="auctionpost border-light">
+      <div class="auctionpost-thumb">
+      <%if auctionpost.image.attached?%>  <%= link_to image_tag(auctionpost.image), auctionpost %><% end %>
+
+
+      </div>
+
+
+    <div class="pa3">
+
+      <h3 class="fw7 f4 title"><%= link_to auctionpost.name, auctionpost %></h3>
+      <p class="has-text-gray fg pt1">Deadline: <%= auctionpost.deadlinetime if auctionpost.user%></p>
+      <br>
+      <%= link_to 'Edit', edit_auctionpost_path(auctionpost), class: "button is-small"%>
+      <%= link_to 'Destroy',auctionpost,method: :delete, data: { confirm: 'Are you sure?' }, class: "button is-small" %>
+      <%if auctionpost.claimed==true %>
+        <p>
+          <strong>Claimed by: </strong>
+          <%= auctionpost.claimedbyname %>
+          <br>
+         <br>
+        </p>
+      <% end %>
+      <p class="f3 fw6 has-text-right pt2 price"> Current bid: Rs <%= auctionpost.startingbid %></p>
+
+
+
+    </div>
+  </div>
+    <% end %>
+  <% end %>
+</div>

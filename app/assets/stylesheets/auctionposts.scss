@@ -1,0 +1,16 @@
+// Place all the styles related to the Auctionposts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.auctionpost-show {
+  .feature-image img {
+    width: 100%;
+  }
+  .add-to-cart {
+    width: 100%;
+  }
+}
+.your-post{
+  border-style: solid;
+  padding: 10px;
+  margin: 10px;
+}

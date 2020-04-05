@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  startingbid: 1
+  deadline: 2020-04-01
+  contact: 1
+
+two:
+  name: MyString
+  description: MyText
+  startingbid: 1
+  deadline: 2020-04-01
+  contact: 1

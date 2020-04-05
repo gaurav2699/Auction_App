@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @auctionpost.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @auctionpost.description %>
+</p>
+
+<p>
+  <% if @auctionpost.claimed!=true %>
+  <strong>Current Bid:</strong>
+  <% else %>
+  <strong>Winning Bid:</strong>
+  <% end %>
+  <%= @auctionpost.startingbid %>
+
+
+</p>
+
+<p>
+  <strong>Deadline:</strong>
+  <%= @auctionpost.deadlinetime %>
+</p>
+
+
+<p>
+  <strong>Contact:</strong>
+  <%= @auctionpost.contactnumber %>
+</p>
+<%if @auctionpost.claimed==true %>
+  <p>
+    <strong>Claimed by: </strong>
+    <%= @auctionpost.claimedbyname %>
+  </p>
+<% end %>
+    <% if @auctionpost.user_id!=current_user.id %>
+<% if @auctionpost.deadlinetime > DateTime.now %>
+<%= form_with(model: @auctionpost, local: true) do |form| %>
+			<strong>	Raise Amount:</strong>
+    			<%= form.text_field :raise_amount,:style => 'width:78px;' %>
+          <%=submit_tag  "Lock", :name => 'bid' %>
+<% if @auctionpost.raise_amount.to_i > 0 %>
+<%= link_to 'Bid', bid_path(@auctionpost), class: 'bid'%><br>
+<% elsif @auctionpost.raise_amount.to_i <=0%>
+<br>
+The amount must be raised by value more than 0.<br>
+<% end %>
+<i>
+(to bid for this product, first enter the amount you want to raise the bid by, then lock it, and finally to confirm, press on the 'bid' button)</i>
+<% end %>
+<% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid!=current_user.id%>
+The Product has been claimed.<br>
+<% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid==current_user.id  and @auctionpost.claimed!=true%>
+<%= link_to 'Claim', claim_path(@auctionpost), class: 'claim'%><br>
+<% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid==current_user.id  and @auctionpost.claimed==true%>
+You have claimed the product.
+<% else %>
+The Auction expired.
+<% end %>
+
+<% end %>
+
+<br>
+<p>
+  <%= image_tag(@auctionpost.image) %>
+</p>
+<%= link_to 'Back', auctionposts_path %>
