@@ -31,37 +31,48 @@
   <strong>Contact:</strong>
   <%= @auctionpost.contactnumber %>
 </p>
+<%-# Once the product is claimed, claimed boolean becomes true -%>
+<%-# And it is printed that that it is claimed by the claimedbyname string corresponding to the post%>
+<%-# which is the name of the user who bid the last -%>
 <%if @auctionpost.claimed==true %>
   <p>
     <strong>Claimed by: </strong>
     <%= @auctionpost.claimedbyname %>
   </p>
 <% end %>
-    <% if @auctionpost.user_id!=current_user.id %>
-<% if @auctionpost.deadlinetime > DateTime.now %>
-<%= form_with(model: @auctionpost, local: true) do |form| %>
-			<strong>	Raise Amount:</strong>
+
+<%-#The below lines of code does the following: -%>
+<%-# the first part is when the deadline hasn't arrived, thus the raise amount text field is active-%>
+<%-# which raises the startingbid column by the amount entered by the user -%>
+<%-# Second part of code is when the deadline is arrived-%>
+<%-# Claim button becomes active to the user containing the same user_id as claimedbyid -%>
+<%-# Other users get the message that Auction is expired -%>
+<%-# Once the user with the highest bid claims the product, the boolean claimed becomes true-%>
+<%-# Thus, the other users get the message that the product has been claimed -%>
+<%-# While the user who claimed it gets the message that you have claimed the product -%>
+<% if @auctionpost.user_id!=current_user.id %>
+   <% if @auctionpost.deadlinetime > DateTime.now %>
+       <%= form_with(model: @auctionpost, local: true) do |form| %>
+			    <strong>	Raise Amount:</strong>
     			<%= form.text_field :raise_amount,:style => 'width:78px;' %>
           <%=submit_tag  "Lock", :name => 'bid' %>
-<% if @auctionpost.raise_amount.to_i > 0 %>
-<%= link_to 'Bid', bid_path(@auctionpost), class: 'bid'%><br>
-<% elsif @auctionpost.raise_amount.to_i <=0%>
-<br>
-The amount must be raised by value more than 0.<br>
-<% end %>
-<i>
-(to bid for this product, first enter the amount you want to raise the bid by, then lock it, and finally to confirm, press on the 'bid' button)</i>
-<% end %>
-<% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid!=current_user.id%>
-The Product has been claimed.<br>
-<% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid==current_user.id  and @auctionpost.claimed!=true%>
-<%= link_to 'Claim', claim_path(@auctionpost), class: 'claim'%><br>
-<% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid==current_user.id  and @auctionpost.claimed==true%>
-You have claimed the product.
-<% else %>
-The Auction expired.
-<% end %>
-
+          <% if @auctionpost.raise_amount.to_i > 0 %>
+                <%= link_to 'Bid', bid_path(@auctionpost), class: 'bid'%><br>
+          <% elsif @auctionpost.raise_amount.to_i <=0%>
+                <br>
+                The amount must be raised by value more than 0.<br>
+          <% end %>
+          <i>(to bid for this product, first enter the amount you want to raise the bid by, then lock it, and finally to confirm, press on the 'bid' button)</i>
+      <% end %>
+  <% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid!=current_user.id%>
+        The Product has been claimed.<br>
+  <% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid==current_user.id  and @auctionpost.claimed!=true%>
+        <%= link_to 'Claim', claim_path(@auctionpost), class: 'claim'%><br>
+  <% elsif @auctionpost.claimedbyid and @auctionpost.claimedbyid==current_user.id  and @auctionpost.claimed==true%>
+        You have claimed the product.
+  <% else %>
+        The Auction expired.
+  <% end %>
 <% end %>
 
 <br>

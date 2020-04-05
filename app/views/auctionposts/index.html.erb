@@ -15,41 +15,35 @@
     <% if auctionpost.user_id!=current_user.id %>
     <div class="auctionpost border-light">
       <div class="auctionpost-thumb">
-      <%if auctionpost.image.attached?%>  <%= link_to image_tag(auctionpost.image), auctionpost %><% end %>
-
-
+          <%if auctionpost.image.attached?%>  <%= link_to image_tag(auctionpost.image), auctionpost %><% end %>
       </div>
+      <div class="pa3">
 
+           <h3 class="fw7 f4 title"><%= link_to auctionpost.name, auctionpost %></h3>
 
-    <div class="pa3">
-
-      <h3 class="fw7 f4 title"><%= link_to auctionpost.name, auctionpost %></h3>
-
-      <p class="has-text-gray fg pt1">Sold by <%= auctionpost.user.name if auctionpost.user%></p>
-      <p class="has-text-gray fg pt1">Deadline: <%= auctionpost.deadlinetime if auctionpost.user%></p>
-      <br>
-      <% if auctionpost.deadlinetime < DateTime.now %>
-      <% if auctionpost.claimedbyid and auctionpost.claimedbyid==current_user.id  and auctionpost.claimed!=true%>
-      <%= link_to 'Claim', claim_path(auctionpost), class: 'claim'%><br>
-      <% end %>
-      <% end %>
-      <%if auctionpost.claimed==true %>
-        <p>
-          <strong>Claimed by: </strong>
-          <%= auctionpost.claimedbyname %>
+           <p class="has-text-gray fg pt1">Sold by <%= auctionpost.user.name if auctionpost.user%></p>
+          <p class="has-text-gray fg pt1">Deadline: <%= auctionpost.deadlinetime if auctionpost.user%></p>
           <br>
-         <br><br>
-        </p>
-      <% end %>
-      <p class="f3 fw6 has-text-right pt2 price">   <% if auctionpost.claimed!=true %>
-        <strong>Current Bid:</strong>
-        <% else %>
-        <strong>Winning Bid:</strong>
-        <% end %>
-        <%= auctionpost.startingbid %></p>
-
-
-
+          <% if auctionpost.deadlinetime < DateTime.now %>
+              <% if auctionpost.claimedbyid and auctionpost.claimedbyid==current_user.id  and auctionpost.claimed!=true%>
+                   <%= link_to 'Claim', claim_path(auctionpost), class: 'claim'%><br>
+              <% end %>
+          <% end %>
+          <%if auctionpost.claimed==true %>
+             <p>
+             <strong>Claimed by: </strong>
+             <%= auctionpost.claimedbyname %>
+             <br>
+             <br><br>
+             </p>
+         <% end %>
+         <p class="f3 fw6 has-text-right pt2 price">
+         <% if auctionpost.claimed!=true %>
+            <strong>Current Bid:</strong>
+         <% else %>
+            <strong>Winning Bid:</strong>
+         <% end %>
+         <%= auctionpost.startingbid %></p>
     </div>
   </div>
     <% end %>
