@@ -26,7 +26,7 @@
           <br>
           <% if auctionpost.deadlinetime < DateTime.now %>
               <% if auctionpost.claimedbyid and auctionpost.claimedbyid==current_user.id  and auctionpost.claimed!=true%>
-                   <%= link_to 'Claim', claim_path(auctionpost), class: 'claim'%><br>
+                   <%= link_to 'Claim', claim_path(auctionpost), class: 'claim'%><br><br><br>
               <% end %>
           <% end %>
           <%if auctionpost.claimed==true %>
