@@ -12,14 +12,21 @@
       <%= link_to 'Edit', edit_auctionpost_path(auctionpost), class: "button is-small"%>
       <%= link_to 'Destroy',auctionpost,method: :delete, data: { confirm: 'Are you sure?' }, class: "button is-small" %>
       <%if auctionpost.claimed==true %>
-        <p>
+        <p><br>
           <strong>Claimed by: </strong>
           <%= auctionpost.claimedbyname %>
           <br>
          <br>
         </p>
       <% end %>
-      <p class="f3 fw6 has-text-right pt2 price"> Current bid: Rs <%= auctionpost.startingbid %></p>
+      <br><br>
+      <p class="f3 fw6 has-text-right pt2 price">
+      <% if auctionpost.claimed!=true %>
+         <strong>Current Bid:</strong>
+      <% else %>
+         <strong>Winning Bid:</strong>
+      <% end %>
+      <%= auctionpost.startingbid %></p>
     </div>
   </div>
     <% end %>
